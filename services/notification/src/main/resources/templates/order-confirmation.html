@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #f4f4f4; padding: 10px; text-align: center; }
+        .content { padding: 20px 0; }
+        .footer { background-color: #f4f4f4; padding: 10px; text-align: center; font-size: 0.8em; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Order Confirmation</h1>
+    </div>
+    <div class="content">
+        <p>Dear <span th:text="${customerName}"></span>,</p>
+        <p>Thank you for your order. We are pleased to confirm that your order has been successfully placed.</p>
+        <p>Order Details:</p>
+        <ul>
+            <li>Order Reference: <span th:text="${orderReference}"></span></li>
+            <li>Total Amount: $<span th:text="${#numbers.formatDecimal(totalAmount, 1, 2)}"></span></li>
+        </ul>
+        <h3>Products Ordered:</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.name()}"></td>
+                <td th:text="${product.description()}"></td>
+                <td th:text="${#numbers.formatDecimal(product.quantity(), 1, 0)}"></td>
+                <td>$<span th:text="${#numbers.formatDecimal(product.price(), 1, 2)}"></span></td>
+                <td>$<span th:text="${#numbers.formatDecimal(product.price() * product.quantity(), 1, 2)}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <p>If you have any questions about your order, please don't hesitate to contact us.</p>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 CodeWithDinh. All rights reserved.</p>
+    </div>
+</div>
+</body>
+</html>
